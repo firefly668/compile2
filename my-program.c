@@ -119,6 +119,7 @@ int main(int argc,char** argv){
             break;
         }
     }
+    printf("%s",strLine);
     symbolStack[1]='#';
     analyse();
     return 0;
