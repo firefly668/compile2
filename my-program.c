@@ -114,7 +114,7 @@ int main(int argc,char** argv){
     //file = fopen("test.txt","rt");
     fgets(strLine,1024,file);
     for(int i=0;i<1024;i++){
-        if(strLine[i]=='\n'){
+        if(strLine[i]=='\r'){
             strLine[i]='#';
             break;
         }
