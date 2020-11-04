@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 FILE* file;
-char strLine[24];
-char symbolStack[24];
+char strLine[1024];
+char symbolStack[1024];
 int top=1,symbol=1,input=0;
 int priority_f(char c){
     if(c=='+') return 2;
@@ -13,6 +13,7 @@ int priority_f(char c){
     if(c==')') return 6;
     if(c=='i') return 6;
     if(c=='#') return 0;
+    return -1;
 }
 
 int priority_g(char c){
@@ -22,17 +23,21 @@ int priority_g(char c){
     if(c==')') return 0;
     if(c=='i') return 5;
     if(c=='#') return 0;
+    return -1;
 }
 
 int priorityCheck(char a,char b){
+    int temp1=priority_f(a);
+    int temp2=priority_g(b);
     if((a=='i' && b=='i')||
     (a=='i' && b=='(')||
     (a==')' && b=='i')||
     (a==')' && b=='(')||
     (a=='(' && b=='#')||
     (a=='#' && b==')')||
-    (a=='#' && b=='#')) return -1;
-    else if(priority_f(a)<=priority_g(b)) return 0;
+    (a=='#' && b=='#')||
+    (temp1==-1 || temp2==-1)) return -1;
+    else if(temp1<=temp2) return 0;
     else return 1;
 }
 
@@ -119,7 +124,6 @@ int main(int argc,char** argv){
             break;
         }
     }
-    printf("%s",strLine);
     symbolStack[1]='#';
     analyse();
     return 0;
